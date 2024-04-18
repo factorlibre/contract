@@ -64,6 +64,7 @@ class ContractAbstractContractLine(models.AbstractModel):
         readonly=False,
         required=True,
         copy=True,
+        precompute=True,
     )
     recurring_invoicing_type = fields.Selection(
         compute="_compute_recurring_invoicing_type",
@@ -71,6 +72,7 @@ class ContractAbstractContractLine(models.AbstractModel):
         readonly=False,
         required=True,
         copy=True,
+        precompute=True,
     )
     recurring_interval = fields.Integer(
         compute="_compute_recurring_interval",
@@ -78,12 +80,21 @@ class ContractAbstractContractLine(models.AbstractModel):
         readonly=False,
         required=True,
         copy=True,
+        precompute=True,
     )
     date_start = fields.Date(
         compute="_compute_date_start",
         store=True,
         readonly=False,
         copy=True,
+        precompute=True,
+    )
+    date_end = fields.Date(
+        compute="_compute_date_end",
+        store=True,
+        readonly=False,
+        copy=True,
+        precompute=True,
     )
     last_date_invoiced = fields.Date()
     is_canceled = fields.Boolean(string="Canceled", default=False)
@@ -144,6 +155,7 @@ class ContractAbstractContractLine(models.AbstractModel):
 
         We need to re-assign the original value for avoiding a missing error.
         """
+        # import pdb; pdb.set_trace()
         for record in self:
             if record.contract_id.line_recurrence:
                 record[field] = record[field]
@@ -165,6 +177,10 @@ class ContractAbstractContractLine(models.AbstractModel):
     @api.depends("contract_id.date_start", "contract_id.line_recurrence")
     def _compute_date_start(self):
         self._set_recurrence_field("date_start")
+    
+    @api.depends("contract_id.date_end", "contract_id.line_recurrence")
+    def _compute_date_end(self):
+        self._set_recurrence_field("date_end")
 
     # pylint: disable=missing-return
     @api.depends("contract_id.recurring_next_date", "contract_id.line_recurrence")

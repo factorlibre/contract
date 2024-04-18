@@ -214,7 +214,7 @@
                                     <field name="currency_id" invisible="1" />
                                     <field name="display_type" invisible="1" />
                                     <field name="sequence" widget="handle" />
-                                    <field name="product_id" />
+                                    <field name="product_id" force_save="1" />
                                     <field
                                         name="product_uom_category_id"
                                         invisible="1"
@@ -241,19 +241,22 @@
                                         groups="product.group_discount_per_so_line"
                                     />
                                     <field name="price_subtotal" />
-                                    <field name="recurring_interval" invisible="1" />
-                                    <field name="recurring_rule_type" invisible="1" />
+                                    <field name="recurring_interval" invisible="0" />
+                                    <field name="recurring_rule_type" invisible="0" />
                                     <field
                                         name="recurring_invoicing_type"
                                         invisible="1"
                                     />
-                                    <field name="recurring_next_date" invisible="1" />
-                                    <field name="date_start" invisible="1" />
+                                    <field name="recurring_next_date" invisible="0" />
+                                    <field name="date_start" invisible="0" />
                                     <field name="date_end" />
                                     <field
                                         name="last_date_invoiced"
                                         groups="base.group_no_one"
                                     />
+                                    <field name="next_period_date_start" />
+                                    <field name="next_period_date_end" />
+
                                     <field
                                         name="create_invoice_visibility"
                                         invisible="1"
